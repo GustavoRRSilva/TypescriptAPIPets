@@ -1,10 +1,26 @@
 import { Response, Request } from "express";
+import type TipoPet from "../tipos/TipoPet";
 
-let listaDePets = [];
+let listaPets: TipoPet[] = [];
+
 export default class PetController {
-    criapet(req: Request, res: Response) {
-        const novopet = req.body;
-        listaDePets.push(novopet);
-        return res.status(201).json(novopet)
+    criaPet(req: Request, res: Response) {
+        const { id,
+            nome,
+            especie,
+            idade,
+            adotado, } = <TipoPet>req.body;
+        const newPet: TipoPet = {
+            id,
+            nome,
+            especie,
+            idade,
+            adotado,
+        }
+        listaPets.push(newPet);
+        return res.status(201).json(newPet)
+    }
+    obtemPets(res:Response){
+        return res.status(201).json(listaPets)
     }
 }
