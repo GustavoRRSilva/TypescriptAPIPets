@@ -1,5 +1,6 @@
 import { Response, Request } from "express";
 import type TipoPet from "../tipos/TipoPet";
+import EnumEspecie from "../enum/especia";
 
 let listaPets: TipoPet[] = [];
 
@@ -10,6 +11,10 @@ export default class PetController {
             especie,
             idade,
             adotado, } = <TipoPet>req.body;
+        //Verifica se a especie é gato ou cachorro
+        if (!Object.values(EnumEspecie).includes(especie)) {
+            return res.status(201).json({error:"Espécie invalida"})
+        }
         const newPet: TipoPet = {
             id,
             nome,
@@ -30,6 +35,7 @@ export default class PetController {
             nome,
             especie,
             idade } = req.body as TipoPet;
+        //pega o json do pet
         const pet = listaPets.find((pet) => pet.id == Number(id));
         if (!pet) {
             return res.status(404).json({ erro: "Pet não encontrado" })
@@ -47,7 +53,9 @@ export default class PetController {
         if (!pet) {
             return res.status(404).json({ error: "Pet não encontrado" })
         }
+        //pega o json do pet
         const index = listaPets.indexOf(pet);
+        //Remove o json do pet
         listaPets.splice(index, 1);
         return res.status(200).json({ message: "Pet excluido com sucesso" });
     }
