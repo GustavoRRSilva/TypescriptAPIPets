@@ -4,22 +4,27 @@ import EnumEspecie from "../enum/especia";
 
 let listaPets: TipoPet[] = [];
 
+let id = 0;
+function geraId() {
+  id = id + 1;
+  return id;
+}
 export default class PetController {
     criaPet(req: Request, res: Response) {
-        const { id,
+        const {
             nome,
             especie,
-            idade,
+            dataDeNascimento,
             adotado, } = <TipoPet>req.body;
         //Verifica se a especie é gato ou cachorro
         if (!Object.values(EnumEspecie).includes(especie)) {
             return res.status(201).json({error:"Espécie invalida"})
         }
         const newPet: TipoPet = {
-            id,
+            id:geraId(),
             nome,
             especie,
-            idade,
+            dataDeNascimento,
             adotado,
         }
         listaPets.push(newPet);
@@ -34,14 +39,14 @@ export default class PetController {
         const { adotado,
             nome,
             especie,
-            idade } = req.body as TipoPet;
+            dataDeNascimento } = req.body as TipoPet;
         //pega o json do pet
         const pet = listaPets.find((pet) => pet.id == Number(id));
         if (!pet) {
             return res.status(404).json({ erro: "Pet não encontrado" })
         }
         pet.nome = nome;
-        pet.idade = idade;
+        pet.dataDeNascimento = dataDeNascimento;
         pet.especie = especie;
         pet.adotado = adotado;
 
