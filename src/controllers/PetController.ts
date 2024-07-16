@@ -1,6 +1,6 @@
 import { Response, Request } from "express";
 import type TipoPet from "../tipos/TipoPet";
-import EnumEspecie from "../enum/especia";
+import EnumEspecie from "../enum/especie";
 
 let listaPets: TipoPet[] = [];
 

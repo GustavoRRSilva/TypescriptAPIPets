@@ -1,4 +1,4 @@
-import EnumEspecie from "../enum/especia";
+import EnumEspecie from "../enum/especie";
 
 type TipoPet = {
     id: number,
