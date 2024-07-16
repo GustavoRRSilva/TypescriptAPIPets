@@ -2,6 +2,7 @@ import { Response, Request } from "express";
 import type TipoPet from "../tipos/TipoPet";
 import EnumEspecie from "../enum/especie";
 import PetRepository from "../repositories/PetRepository";
+import PetEntity from "../entities/PetEntity";
 
 let listaPets: TipoPet[] = [];
 
@@ -19,18 +20,17 @@ export default class PetController {
             nome,
             especie,
             dataDeNascimento,
-            adotado, } = <TipoPet>req.body;
+            adotado, } = <PetEntity>req.body;
         //Verifica se a especie é gato ou cachorro
         if (!Object.values(EnumEspecie).includes(especie)) {
             return res.status(201).json({ error: "Espécie invalida" })
         }
-        const newPet: TipoPet = {
-            id: geraId(),
-            nome,
-            especie,
-            dataDeNascimento,
-            adotado,
-        }
+        const newPet = new PetEntity();
+      (  newPet.id = geraId()),
+        (newPet.nome = nome),
+        (newPet.especie = especie),
+        (newPet.dataDeNascimento=dataDeNascimento),
+        (newPet.adotado =  adotado),
         this.repository.criaPet(newPet)
         return res.status(201).json(newPet)
     }
