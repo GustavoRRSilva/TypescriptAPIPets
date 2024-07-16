@@ -1,9 +1,10 @@
 import express, { Response } from "express";
 import PetController from "../controllers/PetController";
+import PetRepository from "../repositories/PetRepository";
 
 const router = express.Router();
+const petRepository = new PetRepository();
 
-const petController = new PetController();
 
 router.post("/", petController.criaPet)
 router.get("/",petController.obtemPets);
